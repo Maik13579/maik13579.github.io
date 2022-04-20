@@ -1,0 +1,109 @@
+<html>
+<head>
+  <title>Steganography</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <div class="page-header">
+      <h1>Steganography</h1>
+    </div>
+
+    <ul class="nav nav-tabs" id="tabs" data-tabs="tabs">
+      <li role="presentation" class="active"> <a href="#encode" data-toggle="tab">Encode</a></li>
+      <li role="presentation"> <a href="#decode" data-toggle="tab">Decode</a></li>
+    </ul>
+
+    <div id="my-tab-content" class="tab-content">
+      <div class="tab-pane active" id="encode">
+        <div>
+          <h2>Nachricht verstecken</h2>
+          <p class="alert alert-info">
+	    Um eine Nachricht in einem Bild zu verstecken musst du die Nachricht eingeben, ein Bildhochladen und den <strong>Encode</strong> Button drücken. <br/>
+	    Optional kann noch ein Passwort angegeben werden um die Nachricht zu schlüsseln, dadurch kann sie nur von Leuten gelesen werden die das Passwort kennen. <br/>
+	    Die Textzeichen werden in Bytes codiert und in das Bild eingearbeitet. Jeder Pixel besitzt drei Werte für Rot, Grün und Blau. Dadurch ergibt sich die maximale Textlänge mit:<br/>
+	    <br/>
+    	    (Breite*Länge*3)/8<br/>
+	    Ein 1200x1600 Bild hat somit Platz für 720000 Zeíchen.
+          </p>
+          <form class="form">
+            <div class="form-group">
+              <input class="form-control" type="file" name="baseFile" onchange="previewEncodeImage()">
+            </div>
+
+            <div class="form-group">
+              <textarea class="form-control password" rows="1" placeholder="Hier Passwort eingeben oder leer lassen (unverschlüsselt)"></textarea>
+            </div>
+
+            <div class="form-group">
+              <textarea class="form-control message" rows="3" placeholder="Hier Text eingeben"></textarea>
+            </div>
+
+            <div class="form-group">
+              <button class="encode btn btn-default pull-right" onclick="encodeMessage()">Encode</button>
+            </div>
+          </form>
+          <div class="clearfix"></div>
+        </div>
+
+        <div class="error" style="display: none;"></div>
+        <div class="images" style="display: none;">
+          <div class="original" style="display: none;">
+            <h3>Original Bild</h3>
+            <canvas></canvas>
+          </div>
+          <div class="message" style="display: none;">
+            <h3>Bild mit Nachricht(right click <span class="glyphicon glyphicon-arrow-right"></span> save as)</h3>
+            <canvas></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane" id="decode">
+        <div>
+          <h2>Nachricht auslesen</h2>
+          <p class="alert alert-info">
+            Um eine Nachricht aus einem Bild auszulesen, wähle das Bild gebe optional das Passwort ein und drück den <strong>Decode</strong> button.<br/><br/>
+          </p>
+          <form class="form">
+            <div class="form-group">
+              <input class="form-control" type="file" name="decodeFile" onchange="previewDecodeImage()">
+            </div>
+            <div class="form-group">
+              <textarea class="form-control decodepassword" rows="1" placeholder="Hier Passwort eingeben oder leer lassen (unverschlüsselt)"></textarea>
+            </div>
+            <div class="form-group">
+              <button class="decode btn btn-default pull-right" onclick="decodeMessage()">Decode</button>
+            </div>
+          </form>
+          <div class="clearfix"></div>
+        </div>
+        <div class="binary-decode" style="display: none;">
+          <h3>Nachricht</h3>
+          <textarea class="form-control message" style="word-wrap:break-word;">
+          </textarea>
+        </div>
+        <div class="decode" style="display: none;">
+          <h3>Input</h3>
+          <canvas></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <footer style="text-align: center; margin-top: 20px; margin-bottom: 10px;">
+    </footer>
+  </div>
+
+  <style>
+    canvas {
+      max-width: 100%;
+    }
+  </style>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+  <script type="text/JavaScript" src="script.js"></script>
+</body>
+</html>
